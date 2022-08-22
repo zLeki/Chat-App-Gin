@@ -1,10 +1,10 @@
 package main
 
 import (
-	"blocksuite-webbackend/globals"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
+	"github.com/zLeki/Chat-App-Gin/global"
 	"github.com/zLeki/Chat-App-Gin/web/backend/routes"
 	"github.com/zLeki/Chat-App-Gin/web/middleware"
 	"io/ioutil"
@@ -20,23 +20,23 @@ func main() {
 	private := router.Group("/")
 	private.Use(middleware.AuthRequired)
 	routes.PrivateRoutes(private)
-	err := router.Run(port)
+	err := router.Run(global.PORT)
 	if err != nil {
 		panic(err)
 	}
 }
 func HandleRoutes(g *gin.Engine) {
 	var filenames []string
-	items, _ := ioutil.ReadDir("webui/templates")
+	items, _ := ioutil.ReadDir("web/templates")
 	for _, item := range items {
 		if item.IsDir() {
-			subdir, _ := ioutil.ReadDir("webui/templates/" + item.Name())
+			subdir, _ := ioutil.ReadDir("web/templates/" + item.Name())
 			for _, item2 := range subdir {
-				filenames = append(filenames, "webui/templates/"+item.Name()+"/"+item2.Name())
+				filenames = append(filenames, "web/templates/"+item.Name()+"/"+item2.Name())
 			}
 		}
 	}
 	g.LoadHTMLFiles(filenames...)
-	g.Use(sessions.Sessions("session", cookie.NewStore(globals.Secret)))
+	g.Use(sessions.Sessions("session", cookie.NewStore(global.Secret)))
 	g.Static("/static", "./static")
 }
