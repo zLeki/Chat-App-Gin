@@ -1,7 +1,7 @@
 package global
 
 const (
-	PORT = ":8080"
+	PORT = ":6967"
 )
 
 const Userkey = "user"

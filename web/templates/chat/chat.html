@@ -1,0 +1,200 @@
+{{template "chat" .}}
+<!--TODO: Load conversations-->
+<section class="dashboard">
+  <div class="frame">
+
+    <div class="center">
+
+      <div class="container">
+              <div class="menu">
+      <div class="logo">
+        <img style="height: 35px" src="https://texts.com/icon.png">
+      </div>
+      <div class="menu-group01">
+        <div class="menu-logo">
+          <img src="https://res.cloudinary.com/dnqo42bet/image/upload/v1580203678/Chat%20app%20by%20veno/file_j08x8t.png"/>
+        </div>
+        <div class="menu-logo">
+          <img src="https://res.cloudinary.com/dnqo42bet/image/upload/v1580203640/Chat%20app%20by%20veno/calendar_1_il6lxp.png"/>
+        </div>
+        <div class="menu-logo">
+          <img src="https://res.cloudinary.com/dnqo42bet/image/upload/v1580203646/Chat%20app%20by%20veno/chat-bubble_pv9fhq.png"/>
+        </div>
+        <div class="menu-logo">
+          <img src="https://res.cloudinary.com/dnqo42bet/image/upload/v1580203625/Chat%20app%20by%20veno/alarm-bell_i8pyej.png"/>          
+        </div>
+      </div>
+      <div class="bottom">
+        <div class="menu-group02">
+          <div class="menu-logo">
+            <img src="https://res.cloudinary.com/dnqo42bet/image/upload/v1580203655/Chat%20app%20by%20veno/create-group-button_ad7dxc.png"/>
+          </div>
+          <div class="menu-logo">
+            <img src="https://res.cloudinary.com/dnqo42bet/image/upload/v1580203697/Chat%20app%20by%20veno/gear_1_jkoudc.png"/>
+          </div>
+        </div>
+        <div class="avatar">
+          <img src="https://res.cloudinary.com/dnqo42bet/image/upload/v1580395394/Chat%20app%20by%20veno/avatar09_sjae50.png"/>
+        </div>
+      </div>
+    </div>
+      <div class="left-column">
+        <div class="add-input">
+          <Button class="plus-btn">
+            <img src="https://res.cloudinary.com/dnqo42bet/image/upload/v1580203718/Chat%20app%20by%20veno/plus_1_yy8lol.png"/>
+          </Button><Input placeholder="New conversation" class="add"></input>
+        </div>
+        <div class="chat-area">
+          <div class="chat-title">
+            <h1>Chats</h1>
+            <div class="three-dots">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+          </div>
+          <div class="chat-search">
+            <Input placeholder="Search here"></Input><Button class="chat-search-btn">
+              <img src="https://res.cloudinary.com/dnqo42bet/image/upload/v1580203724/Chat%20app%20by%20veno/search_i37qxa.png"/>
+            </Button>
+          </div>
+<!--          Chat container-->
+          {{range $conversation := .Conversations}}
+          <div class="chat-container">
+            <div class="person-on-chat">
+              <div class="avatar">
+                <img style="border-radius: 50%" src="{{$conversation.Pfp}}"/>
+              </div>
+              <div class="information">
+                <span class="name">{{$conversation.Name}}</span>
+                <span class="time">{{$conversation.LastSpoken}}</span>
+              </div>
+            </div>
+          </div>
+          {{end}}
+
+<!--          End-->
+        </div>
+      </div>
+      <div class="middle-column">
+        <div class="chat-screen-top">
+          <div class="chat-with">
+            <div class="avatar">
+              <img style="border-radius: 50%" src="https://pbs.twimg.com/profile_images/1017917453735682048/D6yGqGzu_400x400.jpg"/>
+            </div>
+            <div class="name">Texts Helper</div>
+          </div>
+          <div class="chat-invite">
+            <span>Members:</span>
+            <div class="circle">
+              <img src="https://res.cloudinary.com/dnqo42bet/image/upload/v1580203718/Chat%20app%20by%20veno/plus_1_yy8lol.png"/>
+            </div>
+            <div class="avatar">
+              <img style="border-radius: 50%" src="https://pbs.twimg.com/profile_images/1017917453735682048/D6yGqGzu_400x400.jpg"/>
+            </div>
+
+           <div class="settings">
+              <span class="line"></span>
+            </div>
+          </div>
+        </div>
+        <div class="conversation-area">
+<!--          Chat start-->
+          <div>
+<!--            <div class="conversation inside">-->
+<!--              <div class="message inside-msg">-->
+<!--                <span>-->
+<!--                  Wsg foo-->
+<!--                </span>-->
+<!--                <div class="info">-->
+<!--                  <div class="time">16 mins ago</div>-->
+<!--                  <div class="seen-time">Seen 1:03PM</div>-->
+<!--                </div>-->
+<!--              </div>  -->
+<!--              <div class="avatar">-->
+<!--                <img src="https://res.cloudinary.com/dnqo42bet/image/upload/v1580395394/Chat%20app%20by%20veno/avatar09_sjae50.png"/>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="conversation outside margin-left40">-->
+<!--              <div class="message outside-msg ">-->
+<!--                <span>-->
+<!--                 How may I help you today?-->
+<!--                </span>-->
+<!--                <div class="info">-->
+<!--                  <div class="time"></div>-->
+<!--                  <div class="seen-time"></div>-->
+<!--                </div>-->
+<!--              </div>  -->
+<!--            </div>-->
+            <div class="conversation outside margin-bottom30">
+              <div class="avatar">
+                <img style="border-radius: 50%" src="https://pbs.twimg.com/profile_images/1017917453735682048/D6yGqGzu_400x400.jpg"/>
+              </div>
+              <div class="message outside-msg">
+<!--                <div class="image-boxes">-->
+<!--                  <img src="" />-->
+<!--                </div>-->
+                <span>
+                  Hi, how may I help you
+
+                </span>
+                <div class="info">
+                  <div class="time">Just now</div>
+                  <div class="seen-time"></div>
+                </div>
+              </div>
+            </div>
+<!--            <div class="conversation inside">-->
+<!--            <div class="message inside-msg">-->
+<!--              <span>-->
+<!--                🔥-->
+<!--              </span>-->
+<!--              <div class="info">-->
+<!--                <div class="time">Few secs ago </div>-->
+<!--                <div class="seen-time"> Seen 1:23PM</div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="avatar">-->
+<!--              <img src="https://res.cloudinary.com/dnqo42bet/image/upload/v1580395394/Chat%20app%20by%20veno/avatar09_sjae50.png"/>-->
+<!--            </div>-->
+<!--          </div>-->
+          </div>
+          <div class="area">
+            <div class="text-area">
+              <div class="add-btn">
+                <img src="https://res.cloudinary.com/dnqo42bet/image/upload/v1580203718/Chat%20app%20by%20veno/plus_1_yy8lol.png"/>
+              </div>
+              <Input placeholder="Type a message here" class="text-input"></Input>
+              <div class="smile-btn">
+                <img src="https://res.cloudinary.com/dnqo42bet/image/upload/v1580203732/Chat%20app%20by%20veno/smile_lg7wjp.png"/>
+              </div>
+              <div class="send-btn">
+                <img src="https://res.cloudinary.com/dnqo42bet/image/upload/v1580203708/Chat%20app%20by%20veno/paper-plane_1_hfakff.png"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="right-column">
+        <div class="profile">
+          <img style="border-radius: 50%" src="https://pbs.twimg.com/profile_images/1017917453735682048/D6yGqGzu_400x400.jpg"/>
+          <div class="text">
+            <span>Texts Helper</span>
+            <span class="alt-title">A friendly tool to your aid</span>
+          </div>
+        </div>
+        <div class="accordion">
+          <div class="top">
+            <span>Information</span>
+            <img src="https://res.cloudinary.com/dnqo42bet/image/upload/v1580203664/Chat%20app%20by%20veno/down-arrow_1_mlx0gm.png"/>
+          </div>
+          <div class="panel">
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>

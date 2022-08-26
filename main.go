@@ -8,15 +8,13 @@ import (
 	"github.com/zLeki/Chat-App-Gin/web/backend/routes"
 	"github.com/zLeki/Chat-App-Gin/web/middleware"
 	"io/ioutil"
-	"net/http"
 )
 
 func main() {
 	router := gin.Default()
 	HandleRoutes(router)
 	public := router.Group("/")
-	routes.PrivateRoutes(public)
-	router.NoRoute(func(c *gin.Context) { c.Redirect(http.StatusMovedPermanently, "/") })
+	routes.PublicRoutes(public)
 	private := router.Group("/")
 	private.Use(middleware.AuthRequired)
 	routes.PrivateRoutes(private)
@@ -38,5 +36,5 @@ func HandleRoutes(g *gin.Engine) {
 	}
 	g.LoadHTMLFiles(filenames...)
 	g.Use(sessions.Sessions("session", cookie.NewStore(global.Secret)))
-	g.Static("/static", "./static")
+	g.Static("/web", "./web")
 }
