@@ -8,11 +8,17 @@ import (
 	"github.com/zLeki/Chat-App-Gin/web/backend/routes"
 	"github.com/zLeki/Chat-App-Gin/web/middleware"
 	"io/ioutil"
+	"net/http"
 )
 
 func main() {
 	router := gin.Default()
 	HandleRoutes(router)
+	router.NoRoute(func(c *gin.Context) {
+		c.HTML(http.StatusNotFound, "error.html", gin.H{
+			"Error": "Error 404",
+		})
+	})
 	public := router.Group("/")
 	routes.PublicRoutes(public)
 	private := router.Group("/")

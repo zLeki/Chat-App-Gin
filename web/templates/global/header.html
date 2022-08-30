@@ -1,16 +1,83 @@
 {{define "signup"}}
 <!DOCTYPE html>
 <head>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+    @charset "UTF-8";
+    @import url("https://fonts.googleapis.com/css?family=Montserrat");
+    @import url("https://fonts.googleapis.com/css?family=Source+Code+Pro");
+    body {
+        font-family: Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+
     <script src="/web/static/assets/js/signup.js"></script>
     <link rel="stylesheet" href="/web/static/assets/css/sign-up/style.css">
-</head>
+
 {{end}}
 {{define "chat"}}
 <!DOCTYPE html>
 <head>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <style>
+        @charset "UTF-8";
+        @import url("https://fonts.googleapis.com/css?family=Montserrat");
+        @import url("https://fonts.googleapis.com/css?family=Source+Code+Pro");
+        body {
+            font-family: Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/web/static/assets/js/chat.js"></script>
-    <link rel="stylesheet" href="/web/static/assets/css/chat/style.css">
     <link rel="stylesheet/less" type="text/css" href="/web/static/assets/css/chat/style.less" />
     <script src="https://cdn.jsdelivr.net/npm/less" ></script>
 </head>
+
+
+{{end}}
+
+{{define "sweetalerterror"}}
+    <script>
+        window.addEventListener("load", function(evt) {
+            evt.preventDefault();
+            Swal.fire({
+                toast: true,
+                title: "{{.content}}",
+                icon: "error",
+                position: 'top-end',
+                timer: 3000,
+                timerProgressBar: true,
+                cancelButtonText: 'I need to talk to someone about this 😧',
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonText: `Details 🤓`,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    Swal.fire({
+                        icon: "info",
+                        title: 'Error Details',
+                        text: "{{.error}}",
+                        showCancelButton: true,
+                        cancelButtonText: 'I need to talk to someone about this 😧',
+                        confirmButtonText: 'Ok',
+                        html: `<pre>{{.error}}</pre>`,
+                    })
+                }else if (result.dismiss === Swal.DismissReason.cancel) {
+                    window.location.href = "mailto:lekiisacooldude@gmail.com?subject=Error Report&body={{.error}}";
+                }else {
+                    window.location = "/chat/home";
+                }
+            });
+
+        });
+    </script>
 {{end}}

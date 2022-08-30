@@ -1,12 +1,12 @@
 {{template "signup" .}}
+
+<body>
 <div class="cont_principal">
 
     <div class="cont_centrar">
         <div class="cont_login">
             <form action="/" method="post">
-                <div class="message">
-                    <p>{{.content}}</p>
-                </div>
+
                 <div class="cont_tabs_login">
                     <ul class='ul_tabs'>
                         <li class="active"><a href="#" onclick="sign_in()">SIGN IN</a>
@@ -42,3 +42,25 @@
 
 
 </div>
+</body>
+{{if .content}}
+<script>
+    window.addEventListener("load", function(evt) {
+        evt.preventDefault();
+        Swal.fire({
+            toast: true,
+            title: "{{.content}}",
+            icon: "error",
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
+
+    });
+</script>
+{{end}}

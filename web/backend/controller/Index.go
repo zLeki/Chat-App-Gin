@@ -1,21 +1,26 @@
 package controller
 
 import (
+	"github.com/zLeki/Chat-App-Gin/web/backend/helpers"
 	"log"
 	"net/http"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/zLeki/Chat-App-Gin/global"
-	"github.com/zLeki/Chat-App-Gin/web/backend/helpers"
 	"golang.org/x/crypto/bcrypt"
 )
 
 func IndexGetHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		session := sessions.Default(c)
+		user := session.Get(global.Userkey)
+		if user != nil {
+			c.Redirect(http.StatusMovedPermanently, "/chat/home")
+			return
+		}
 		c.HTML(http.StatusOK, "index.html", gin.H{
 			"content": "",
-			"siteKey": "6Lcxl8caAAAAALgD74KC0BkTCUnP9sDfotd_02ot",
 			"success": "",
 		})
 	}
@@ -25,10 +30,11 @@ func IndexPostHandler() gin.HandlerFunc {
 		session := sessions.Default(c)
 		user := session.Get(global.Userkey)
 		if user != nil {
-			c.Redirect(http.StatusMovedPermanently, "/chat")
+			c.Redirect(http.StatusMovedPermanently, "/chat/home")
 		}
 		tos := helpers.Sanitize(c.PostForm("terms_and_cons"))
 		log.Println("tos", tos)
+
 		email_us := helpers.Sanitize(c.PostForm("emauil_us"))
 		pass_us := helpers.Sanitize(c.PostForm("pass_us"))
 		conf_pass_us := helpers.Sanitize(c.PostForm("conf_pass_us"))
@@ -70,7 +76,7 @@ func IndexPostHandler() gin.HandlerFunc {
 			}
 			session.Set(global.Userkey, email_us)
 			session.Save()
-			c.Redirect(http.StatusMovedPermanently, "/chat")
+			c.Redirect(http.StatusMovedPermanently, "/chat/home")
 		} else {
 			if tos != "on" {
 				c.HTML(http.StatusOK, "index.html", gin.H{
@@ -87,6 +93,7 @@ func IndexPostHandler() gin.HandlerFunc {
 			db := helpers.GetDB()
 			defer db.Close()
 			db.Exec("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT, email TEXT, password TEXT)")
+			name_us := helpers.Sanitize(c.PostForm("name_us"))
 			var name string
 			db.QueryRow("SELECT name FROM users WHERE email = ?", email_us).Scan(&name)
 			if name != "" {
@@ -95,19 +102,19 @@ func IndexPostHandler() gin.HandlerFunc {
 				})
 				return
 			}
-			q, err := db.Prepare("INSERT INTO users (name, email, password) VALUES(?, ?, ?)")
+			q, err := db.Prepare("INSERT INTO users (name, email, password, conversations, settings) VALUES(?, ?, ?, ?, ?)")
 			if err != nil {
 				log.Println(err)
 				return
 			}
-			_, err = q.Exec(name, email_us, HashPassword(pass_us))
+			_, err = q.Exec(name_us, email_us, HashPassword(pass_us), `{"conversations":[]}`, `{"profile_picture":""}`)
 			if err != nil {
 				log.Println(err)
 				return
 			}
 			session.Set(global.Userkey, email_us)
 			session.Save()
-			c.Redirect(http.StatusMovedPermanently, "/chat")
+			c.Redirect(http.StatusMovedPermanently, "/chat/home")
 
 		}
 
