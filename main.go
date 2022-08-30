@@ -14,9 +14,13 @@ import (
 func main() {
 	router := gin.Default()
 	HandleRoutes(router)
+	router.NoRoute(func(c *gin.Context) {
+		c.HTML(http.StatusNotFound, "error.html", gin.H{
+			"Error": "Error 404",
+		})
+	})
 	public := router.Group("/")
-	routes.PrivateRoutes(public)
-	router.NoRoute(func(c *gin.Context) { c.Redirect(http.StatusMovedPermanently, "/") })
+	routes.PublicRoutes(public)
 	private := router.Group("/")
 	private.Use(middleware.AuthRequired)
 	routes.PrivateRoutes(private)
@@ -38,5 +42,5 @@ func HandleRoutes(g *gin.Engine) {
 	}
 	g.LoadHTMLFiles(filenames...)
 	g.Use(sessions.Sessions("session", cookie.NewStore(global.Secret)))
-	g.Static("/static", "./static")
+	g.Static("/web", "./web")
 }

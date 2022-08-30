@@ -13,7 +13,7 @@ func AuthRequired(c *gin.Context) {
 	user := session.Get("user")
 	if user == nil {
 		log.Println("User not logged in")
-		c.Redirect(http.StatusMovedPermanently, "/login")
+		c.Redirect(http.StatusMovedPermanently, "/")
 		c.Abort()
 		return
 	}
